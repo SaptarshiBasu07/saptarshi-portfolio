@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saptarshi Basu | AI, Web & IoT Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* --- BEIGE & MAROON AESTHETIC --- */
+        :root {
+            --bg-base: #F7F4EF; 
+            --bg-card: #FFFFFF;
+            --maroon-dark: #4A1525;
+            --maroon-main: #8B263B;
+            --maroon-light: #B83A54;
+            --text-dark: #2D1B1E;
+            --text-muted: #6D5D5A;
+            --border-color: rgba(139, 38, 59, 0.15);
+            --gradient-text: linear-gradient(135deg, var(--maroon-main), var(--maroon-light));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth; 
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: radial-gradient(rgba(139, 38, 59, 0.03) 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+
+        a { text-decoration: none; color: var(--maroon-main); transition: all 0.3s ease; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+
+        /* --- FIXED FLOATING NAVIGATION --- */
+        .floating-nav {
+            position: fixed;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 12px 35px;
+            display: flex;
+            gap: 30px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(74, 21, 37, 0.08);
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Outfit'; font-weight: 900; font-size: 1.2rem;
+            color: var(--maroon-dark); margin-right: 20px;
+        }
+
+        .nav-links { display: flex; gap: 25px; }
+        
+        .nav-links a {
+            font-size: 0.95rem; font-weight: 600; color: var(--text-muted); position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active { color: var(--maroon-main); }
+        
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: var(--maroon-main); transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            justify-content: space-between; gap: 50px; padding-top: 100px;
+        }
+
+        .hero-content { flex: 1.2; }
+
+        .domains {
+            color: var(--maroon-main); font-weight: 700; letter-spacing: 1.5px;
+            font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 5.5rem; font-weight: 900; line-height: 1; margin-bottom: 25px;
+            letter-spacing: -2px; color: var(--maroon-dark);
+        }
+
+        .punchline-badge {
+            background: #FFFFFF; border: 2px solid var(--maroon-main); padding: 20px 30px;
+            border-radius: 16px; display: inline-block; margin-bottom: 30px;
+            box-shadow: 6px 6px 0px rgba(139, 38, 59, 0.15);
+        }
+
+        .punchline-badge p { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--text-dark); line-height: 1.6; }
+        .punchline-badge span { color: var(--maroon-main); font-weight: 800; }
+
+        .hero p.bio { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 40px; max-width: 650px; }
+
+        .hero-image-container { flex: 0.8; display: flex; justify-content: center; position: relative; }
+
+        .hero-image {
+            width: 100%; max-width: 480px; position: relative; z-index: 2;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 65%, rgba(0,0,0,0) 100%);
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 120px 0; border-bottom: 1px solid var(--border-color); }
+        
+        .section-title {
+            font-size: 3.5rem; font-weight: 900; margin-bottom: 60px;
+            color: var(--maroon-dark); display: inline-block;
+            border-bottom: 4px solid var(--maroon-light); padding-bottom: 5px;
+        }
+
+        /* --- CARDS & AESTHETIC LISTS --- */
+        .aesthetic-card {
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px;
+            padding: 45px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(74, 21, 37, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .aesthetic-card:hover {
+            transform: translateY(-5px); box-shadow: 0 20px 40px rgba(74, 21, 37, 0.08);
+            border-color: var(--maroon-main);
+        }
+
+        .exp-header {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 25px; flex-wrap: wrap; gap: 15px; border-bottom: 2px dashed var(--border-color); padding-bottom: 20px;
+        }
+
+        .exp-title h3 { font-size: 2rem; color: var(--maroon-dark); font-weight: 800; }
+        .exp-title h4 { font-size: 1.25rem; color: var(--maroon-main); font-weight: 700; margin-top: 5px; }
+        
+        .exp-date {
+            background: rgba(139, 38, 59, 0.08); padding: 8px 18px; border-radius: 50px;
+            font-size: 0.95rem; font-weight: 700; color: var(--maroon-main);
+        }
+
+        /* Upgraded Aesthetic List for Experience */
+        .exp-list { display: flex; flex-direction: column; gap: 18px; margin-top: 25px; }
+        
+        .exp-item { display: flex; align-items: flex-start; gap: 15px; }
+        
+        .exp-icon { color: var(--maroon-light); font-size: 1.4rem; line-height: 1.2; }
+        
+        .exp-text { color: var(--text-dark); font-size: 1.05rem; line-height: 1.7; }
+        .exp-text strong { color: var(--maroon-dark); font-weight: 700; }
+
+        /* --- GRID LAYOUTS --- */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+        .stat-highlight {
+            font-size: 3rem; font-weight: 900; color: var(--maroon-main); margin-bottom: 10px; display: block; line-height: 1;
+        }
+
+        /* --- TAGS (Skills, Tech & Interests) --- */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+        .tag {
+            background: rgba(139, 38, 59, 0.05); color: var(--maroon-main);
+            padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 700;
+            border: 1px solid rgba(139, 38, 59, 0.2); transition: all 0.3s;
+        }
+        .tag:hover { background: var(--maroon-main); color: #fff; }
+
+        /* --- FOOTER / CONTACT --- */
+        footer { background: var(--maroon-dark); padding: 100px 0; text-align: center; color: #fff; }
+        
+        .contact-wrap { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin: 50px 0; }
+        .contact-item { display: flex; flex-direction: column; align-items: center; }
+        .contact-item span { color: rgba(255,255,255,0.7); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+        .contact-item a, .contact-item strong { font-size: 1.3rem; color: #fff; font-weight: 600; font-family: 'Outfit'; }
+        .contact-item a:hover { color: #fca5a5; }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero { flex-direction: column-reverse; text-align: center; padding-top: 140px; }
+            .hero h1 { font-size: 4rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .floating-nav { width: 90%; flex-wrap: wrap; justify-content: center; padding: 15px; border-radius: 20px; }
+            .nav-logo { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="floating-nav gsap-fade">
+        <div class="nav-logo">SB.</div>
+        <div class="nav-links">
+            <a href="#profile">Profile</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="profile" class="hero" style="border:none;">
+            <div class="hero-content gsap-stagger">
+                <div class="domains">ECE Engineer | AI Applications | Tech Educator | AI Outreach</div>
+                <h1>SAPTARSHI<br>BASU</h1>
+                
+                <div class="punchline-badge">
+                    <p>🎯 Incoming Technical Trainee @ <span>Godrej Infotech</span> <br> 🤖 AI Intern @ <span>BHARAT Plus AI</span><br> 📚 Online Tech Educator @ <span>LME & Deepti</span></p>
+                </div>
+
+                <p class="bio">
+                    Electronics and Communication Engineering undergraduate (2026 batch) bridging the gap between hardware architecture, Artificial Intelligence workflows, and full-stack development. Actively involved in AI-assisted workflows, academic content development, and digital learning enablement. I am passionate about simplifying complex technical paradigms and building scalable learning ecosystems.
+                </p>
+            </div>
+
+            <div class="hero-image-container gsap-fade">
+                <img src="mysnap2.png" alt="Saptarshi Basu" class="hero-image">
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2 class="section-title gsap-slide-up">Professional Vanguard</h2>
+            
+            <div class="aesthetic-card gsap-slide-up">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>Incoming Technical Trainee</h3>
+                        <h4>Godrej Infotech</h4>
+                    </div>
+                    <div class="exp-date">Expected Onboarding: 2026</div>
+                </div>
+                <div class="exp-list">
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Technical Validation:</strong> Successfully cleared rigorous multi-stage campus selection examinations, validating deep technical aptitude, problem-solving capabilities, and core engineering fundamentals against highly competitive enterprise standards.</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Corporate Integration:</strong> Currently finalizing institutional documentation and administrative onboarding protocols, poised to integrate into corporate IT operations and contribute to scalable tech solutions post-graduation.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aesthetic-card gsap-slide-up">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>AI Intern (Artificial Intelligence Applications)</h3>
+                        <h4>BHARAT Plus AI (Calnestor IntelliTech Solutions Pvt. Ltd.)</h4>
+                    </div>
+                    <div class="exp-date">Feb 2026 - Present</div>
+                </div>
+                <div class="exp-list">
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Workflow Optimization:</strong> Spearheading the integration of AI-assisted workflows to optimize practical problem domains and accelerate research pipelines within a fast-paced, high-growth startup environment.</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Real-World Deployment:</strong> Contributing directly to the development and real-world deployment of generative AI-driven solutions tailored for industry-specific use cases, ensuring robust application logic and presentation.</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Cross-Functional Innovation:</strong> Collaborating across cross-functional teams to explore and implement advanced AI technologies, pushing the boundaries of automated efficiency.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aesthetic-card gsap-slide-up">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>Technical Educator (Engineering & EdTech)</h3>
+                        <h4>LME (Last Minute Engineering)</h4>
+                    </div>
+                    <div class="exp-date">March 2026 - Present</div>
+                </div>
+                <div class="exp-list">
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Curriculum Architecture:</strong> Architected and taught comprehensive modules on Computer Networks and Network Theory, actively mentoring MAKAUT university students through highly structured, exam-oriented frameworks.</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Conceptual Translation:</strong> Focused intensively on conceptual clarity by translating dense mathematical and theoretical paradigms into simplified, accessible learning approaches.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aesthetic-card gsap-slide-up">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>Online Educator & Mentor</h3>
+                        <h4>Deepti Educational Institute</h4>
+                    </div>
+                    <div class="exp-date">Feb 2025 - Present</div>
+                </div>
+                <div class="exp-list">
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Digital Enablement:</strong> Delivered end-to-end online technical sessions across multiple student batches, engineering highly organized digital learning materials and study resources.</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Mentorship:</strong> Guided learners in the adoption of modern digital learning tools and technology-enabled study methods, mentoring them in structured problem-solving approaches.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="aesthetic-card gsap-slide-up">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>Industrial Trainee (CNS)</h3>
+                        <h4>Airports Authority of India (AAI)</h4>
+                    </div>
+                    <div class="exp-date">July 2025</div>
+                </div>
+                <div class="exp-list">
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Aviation Telemetry:</strong> Conducted detailed observational studies on safety-critical aviation Communication, Navigation, and Surveillance (CNS) systems, specifically analyzing VHF, Radar, and Nav-Aids technologies.</div>
+                    </div>
+                    <div class="exp-item">
+                        <div class="exp-icon">✦</div>
+                        <div class="exp-text"><strong>Operational Safety:</strong> Acquired first-hand exposure to the rigorous protocols, technical fail-safes, and high-stakes operations required in air traffic management environments.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title gsap-slide-up">Engineering Projects</h2>
+            
+            <div class="aesthetic-card gsap-slide-up">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3 style="font-size: 2.2rem;">Healthcare Monitoring System</h3>
+                        <h4>End-to-End IoT + Full-Stack Web Platform Architecture</h4>
+                    </div>
+                </div>
+                
+                <div class="tag-container" style="margin-bottom: 35px;">
+                    <span class="tag">ESP32 Hardware</span>
+                    <span class="tag">MAX30102 (I2C)</span>
+                    <span class="tag">DS18B20 Sensor</span>
+                    <span class="tag">Node.js API</span>
+                    <span class="tag">Express.js Framework</span>
+                    <span class="tag">MongoDB Database</span>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <h4 style="color: var(--maroon-dark); margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; font-size: 1.3rem;">Hardware Infrastructure</h4>
+                        <div class="exp-list" style="margin-top: 10px;">
+                            <div class="exp-item">
+                                <div class="exp-icon">✦</div>
+                                <div class="exp-text">Engineered the core processing unit utilizing an <strong>ESP32</strong>-based IoT microcontroller for reliable, low-latency wireless data transmission.</div>
+                            </div>
+                            <div class="exp-item">
+                                <div class="exp-icon">✦</div>
+                                <div class="exp-text">Mapped I2C protocols for the <strong>MAX30102</strong> and utilized digital pins for the <strong>DS18B20</strong> to guarantee absolute telemetry accuracy and hardware stability.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--maroon-dark); margin-bottom: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; font-size: 1.3rem;">Software Architecture</h4>
+                        <div class="exp-list" style="margin-top: 10px;">
+                            <div class="exp-item">
+                                <div class="exp-icon">✦</div>
+                                <div class="exp-text">Built a robust, full-stack web application utilizing <strong>Node.js</strong> and <strong>Express.js</strong> to execute RESTful handling and process continuous sensor arrays.</div>
+                            </div>
+                            <div class="exp-item">
+                                <div class="exp-icon">✦</div>
+                                <div class="exp-text">Implemented <strong>MongoDB</strong> architecture to support multi-user access and secure, long-term storage of critical health tracking data.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title gsap-slide-up">Technical Arsenal</h2>
+            
+            <div class="grid-2">
+                <div class="aesthetic-card gsap-slide-up" style="margin-bottom: 0;">
+                    <h3 style="color: var(--maroon-dark); font-size: 1.6rem; margin-bottom: 10px;">Programming & Web</h3>
+                    <div class="tag-container" style="margin-top: 0;">
+                        <span class="tag">C++</span> <span class="tag">HTML / CSS</span> <span class="tag">Node.js</span>
+                        <span class="tag">Express.js</span> <span class="tag">MongoDB</span> <span class="tag">Full-Stack Development</span>
+                    </div>
+                </div>
+
+                <div class="aesthetic-card gsap-slide-up" style="margin-bottom: 0;">
+                    <h3 style="color: var(--maroon-dark); font-size: 1.6rem; margin-bottom: 10px;">Hardware & ECE Core</h3>
+                    <div class="tag-container" style="margin-top: 0;">
+                        <span class="tag">Digital Electronics</span> <span class="tag">Communication Systems</span>
+                        <span class="tag">Computer Networking</span> <span class="tag">Basic IoT & Sensors</span> <span class="tag">Network Theory</span>
+                    </div>
+                </div>
+
+                <div class="aesthetic-card gsap-slide-up" style="margin-bottom: 0;">
+                    <h3 style="color: var(--maroon-dark); font-size: 1.6rem; margin-bottom: 10px;">Leadership & Outreach</h3>
+                    <div class="tag-container" style="margin-top: 0;">
+                        <span class="tag">AI-assisted Workflows</span> <span class="tag">Student Mentoring</span>
+                        <span class="tag">Academic Content Development</span> <span class="tag">Tech Education</span>
+                    </div>
+                </div>
+
+                <div class="aesthetic-card gsap-slide-up" style="margin-bottom: 0; background-color: var(--maroon-dark);">
+                    <h3 style="color: #fff; font-size: 1.6rem; margin-bottom: 10px;">Domains of Interest</h3>
+                    <div class="tag-container" style="margin-top: 0;">
+                        <span class="tag" style="background: rgba(255,255,255,0.1); color:#fff; border-color: rgba(255,255,255,0.3);">Artificial Intelligence</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.1); color:#fff; border-color: rgba(255,255,255,0.3);">Tech Education & EdTech</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.1); color:#fff; border-color: rgba(255,255,255,0.3);">Web Development</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.1); color:#fff; border-color: rgba(255,255,255,0.3);">Startup & Innovation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2 class="section-title gsap-slide-up">Academic Foundation</h2>
+            
+            <div class="grid-3">
+                <div class="aesthetic-card gsap-slide-up" style="height: 100%;">
+                    <h4 style="font-size: 1.2rem; color: var(--maroon-dark); margin-bottom: 10px;">B.Tech - Electronics & Communication</h4>
+                    <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">Maulana Abul Kalam Azad University of Technology (MAKAUT), West Bengal</p>
+                    <span class="stat-highlight">7.845 CGPA</span>
+                    <p style="font-weight: 700; color: var(--maroon-light);">Expected Graduation: 2026</p>
+                </div>
+
+                <div class="aesthetic-card gsap-slide-up" style="height: 100%;">
+                    <h4 style="font-size: 1.2rem; color: var(--maroon-dark); margin-bottom: 10px;">Class XII (WBCHSE)</h4>
+                    <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">Pathfinder Higher Secondary Public School<br>Physics, Chemistry, Maths & CS</p>
+                    <span class="stat-highlight" style="font-size: 2.5rem;">94.20%</span>
+                    <p style="font-weight: 700; color: var(--maroon-light);">Year: 2022</p>
+                </div>
+
+                <div class="aesthetic-card gsap-slide-up" style="height: 100%;">
+                    <h4 style="font-size: 1.2rem; color: var(--maroon-dark); margin-bottom: 10px;">Class X (WBBSE)</h4>
+                    <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">Nava Nalanda<br>General Academics</p>
+                    <span class="stat-highlight" style="font-size: 2.5rem;">86.43%</span>
+                    <p style="font-weight: 700; color: var(--maroon-light);">Year: 2020</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer id="contact">
+        <div class="container gsap-slide-up">
+            <h2 style="font-size: 3rem; font-family: 'Outfit'; margin-bottom: 20px; color: #fff;">Let's Build the Future.</h2>
+            <p style="color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto; font-size: 1.1rem;">
+                Currently seeking dynamic opportunities across AI-driven organizations, tech startups, and educational institutions where technology, innovation, and learning intersect.
+            </p>
+
+            <div class="contact-wrap">
+                <div class="contact-item">
+                    <span>Primary Email</span>
+                    <a href="mailto:saptarshibasu12c@gmail.com">saptarshibasu12c@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <span>Secondary Email</span>
+                    <a href="mailto:saptarshibasuece@gmail.com">saptarshibasuece@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <span>Phone / WhatsApp</span>
+                    <a href="tel:+917439645008">+91 7439645008</a>
+                </div>
+                <div class="contact-item">
+                    <span>Professional Network</span>
+                    <a href="https://www.linkedin.com/in/saptarshibasu07" target="_blank">linkedin.com/in/saptarshibasu07</a>
+                </div>
+                <div class="contact-item" style="width: 100%; margin-top: 20px;">
+                    <span>Base of Operations</span>
+                    <strong>Howrah, West Bengal - 711101</strong>
+                </div>
+            </div>
+
+            <p style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                © 2026 Saptarshi Basu. Engineered with HTML, CSS & GSAP.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from(".gsap-fade", { y: -20, opacity: 0, duration: 1, ease: "power3.out" });
+        gsap.from(".gsap-stagger > *", { 
+            y: 30, opacity: 0, duration: 1, stagger: 0.15, ease: "power3.out", delay: 0.2
+        });
+
+        const slideUpElements = document.querySelectorAll(".gsap-slide-up");
+        slideUpElements.forEach((el) => {
+            gsap.fromTo(el, 
+                { y: 40, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: el, start: "top 85%", toggleActions: "play none none none"
+                    }
+                }
+            );
+        });
+
+        // Fixed Active State Logic
+        const sections = document.querySelectorAll("section, footer");
+        const navLinks = document.querySelectorAll(".nav-links a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            // Hardcode fix: If user hits the absolute bottom of the page, force "contact" to be active
+            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 50) {
+                current = "contact";
+            }
+
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
